@@ -18,6 +18,8 @@ class class1 {
 
             if(req.session.userid){
 
+                await Todo.findOne({ signuptoken: req.session.userid }).deleteOne();
+                
                 req.session.destroy();
 
             }

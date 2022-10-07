@@ -5,6 +5,30 @@ var {class1} = require('../controller/controller');
 
 var path = require("path");
 
+var Todo = require("../models/schema")
+
+const schedule = require('node-schedule');
+
+const job = schedule.scheduleJob('00 00 00 * * *', async function(){
+
+    await Todo.findOne({ complete: "no" }).deleteMany();
+    console.log("Hi");
+
+});
+
+// var CronJob = require('cron').CronJob;
+// var job = new CronJob('00 00 12 * * 0-6', function() {
+//   /*
+//    * Runs every day
+//    * at 12:00:00 AM.
+//    */
+//   }, function () {
+//     /* This function is executed when the job stops */
+//   },
+//   true, /* Start the job right now */
+//   timeZone /* Time zone of this job. */
+// );  // add also routes ( routes under data save without complete field ) if success then add maintenance page and check ortherwise setting page 
+
 router.get("/page",(req,res)=>{
 
     console.log(process.env.SECRET_KEY);

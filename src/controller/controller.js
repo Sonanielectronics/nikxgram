@@ -198,9 +198,9 @@ class class1 {
 
                 if (Passwordmatch) {
 
-                    var logintoken = await jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
+                    res.send(process.env.SECRET_KEY);
 
-                    res.send("Hi");
+                    // var logintoken = await jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
 
                     // var sessionstore = req.session;
                     // sessionstore.signuptoken = logindata.signuptoken;

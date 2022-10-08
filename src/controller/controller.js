@@ -192,9 +192,9 @@ class class1 {
         try {
 
             var logindata = await Todo.findOne({ username: req.body.loginusername })
-            res.send(logindata)
 
                 var Passwordmatch = await bcrypt.compare(req.body.loginpassword, logindata.password);
+                res.send(Passwordmatch)
 
                 if (Passwordmatch) {
 

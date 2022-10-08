@@ -235,7 +235,8 @@ class class1 {
 
             if (req.cookies.logintoken) {
 
-                res.render('first');
+                console.log(req.cookies.logintoken);
+                // res.render('first');
 
             } else if (req.session.signuptoken){
 

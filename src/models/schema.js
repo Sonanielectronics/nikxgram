@@ -8,8 +8,7 @@
         username: {
             type: String,
             required: true,
-            unique: [true],
-            expires: new Date()
+            unique: [true]
         },
         password: {
             type: String,

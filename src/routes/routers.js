@@ -43,6 +43,7 @@ router.post("/otp",class1.d);
 router.get('/login', class1.e);
 router.post('/login', class1.f);
 router.get("/first",class1.g);
+router.get("/alldata",class1.alldata);
 
 router.get("/*",(req,res)=>{
 

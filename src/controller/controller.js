@@ -195,30 +195,31 @@ class class1 {
 
                 var Passwordmatch = await bcrypt.compare(req.body.loginpassword, logindata.password);
 
-                if (Passwordmatch) {
+                res.send(Passwordmatch);
+                // if (Passwordmatch) {
 
-                    var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
+                //     var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
 
-                    var sessionstore = req.session;
-                    sessionstore.signuptoken = logindata.signuptoken;
-                    sessionstore.save();
+                //     var sessionstore = req.session;
+                //     sessionstore.signuptoken = logindata.signuptoken;
+                //     sessionstore.save();
 
-                    res.cookie("logintoken", logintoken
-                        , {
-                            expires: new Date(Date.now() + 1000),
-                            httpOnly: true
-                        });
+                //     res.cookie("logintoken", logintoken
+                //         , {
+                //             expires: new Date(Date.now() + 1000),
+                //             httpOnly: true
+                //         });
 
-                    var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
-                    await updateuser.save();
+                //     var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
+                //     await updateuser.save();
 
-                    res.redirect('/first');
+                //     res.redirect('/first');
 
-                } else {
+                // } else {
 
-                    res.render("password");
+                //     res.render("password");
 
-                }
+                // }
 
         } catch (err) {
 
@@ -261,7 +262,10 @@ class class1 {
         }
 
     }
-
+    static alldata = async(req,res)=>{
+        let data = await Todo.find();
+        res.json(data);
+    }
 }
 
 module.exports = { class1 };

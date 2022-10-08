@@ -198,18 +198,18 @@ class class1 {
 
                 if (Passwordmatch) {
 
-                    var logintoken = await jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
+                    res.send("Hi");
+                    // var logintoken = await jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
 
-                    var sessionstore = req.session;
-                    sessionstore.signuptoken = logindata.signuptoken;
-                    sessionstore.save();
+                    // var sessionstore = req.session;
+                    // sessionstore.signuptoken = logindata.signuptoken;
+                    // sessionstore.save();
 
-                    res.cookie("logintoken", logintoken
-                        , {
-                            expires: new Date(Date.now() + 1000),
-                            httpOnly: true
-                        });
-                        res.send("hii");
+                    // res.cookie("logintoken", logintoken
+                    //     , {
+                    //         expires: new Date(Date.now() + 1000),
+                    //         httpOnly: true
+                    //     });
                     // var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
                     // await updateuser.save();
 

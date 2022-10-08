@@ -1,6 +1,6 @@
 const  mongoose = require("mongoose");
 
-var  uri = "mongodb+srv://user:xXTeGnpMZHCPANju@cluster.hvnh0of.mongodb.net/NikxgramDatabase?retryWrites=true&w=majority"
+var  uri = process.env.oneDay || "mongodb+srv://user:xXTeGnpMZHCPANju@cluster.hvnh0of.mongodb.net/NikxgramDatabase?retryWrites=true&w=majority"
 
 const  options = {
 useNewUrlParser:  true,

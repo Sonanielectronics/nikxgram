@@ -9,7 +9,9 @@ var fs = require('fs');
 
 const schedule = require('node-schedule');
 const session = require("express-session");
-const { Console } = require("console");
+
+var SECRET_KEY = process.env.SECRET_KEY || "YOURSECRETKEYGOESHERE" ;
+var expirestime = process.env.expirestime || 1000 ; 
 
 class class1 {
 
@@ -43,7 +45,7 @@ class class1 {
 
             if (user == null && req.body.password == req.body.confirmpassword) {
 
-                var signuptoken = jwt.sign({ username: req.body.username }, "YOURSECRETKEYGOESHERE");
+                var signuptoken = jwt.sign({ username: req.body.username }, SECRET_KEY);
 
                 function between(min, max) {
                     return Math.floor(
@@ -197,7 +199,7 @@ class class1 {
 
                 if (Passwordmatch) {
 
-                    var logintoken = await jwt.sign({ username: req.body.loginusername }, "YOURSECRETKEYGOESHERE");
+                    var logintoken = await jwt.sign({ username: req.body.loginusername }, SECRET_KEY);
 
                     var sessionstore = req.session;
                     sessionstore.signuptoken = logindata.signuptoken;
@@ -205,7 +207,7 @@ class class1 {
 
                     res.cookie("logintoken", logintoken
                         , {
-                            expires: new Date(Date.now() + 1000),
+                            expires: new Date(Date.now() + expirestime),
                             httpOnly: true
                         });
                     var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
@@ -237,11 +239,11 @@ class class1 {
 
             } else if (req.session.signuptoken){
 
-                var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
+                var logintoken = jwt.sign({ username: req.body.loginusername }, SECRET_KEY);
 
                 res.cookie("logintoken", logintoken
                     , {
-                        expires: new Date(Date.now() + 1000),
+                        expires: new Date(Date.now() + expirestime),
                         httpOnly: true
                     });
 
@@ -260,10 +262,7 @@ class class1 {
         }
 
     }
-    static alldata = async(req,res)=>{
-        let data = await Todo.find();
-        res.json(data);
-    }
+
 }
 
 module.exports = { class1 };

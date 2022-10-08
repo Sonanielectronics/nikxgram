@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 const sessions = require('express-session');
-const oneDay = 1000 * 60 * 60 * 24;
+const oneDay = process.env.oneDay || 1000 * 60 * 60 * 24;
 app.use(sessions({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized:true,
@@ -38,5 +38,5 @@ const  port = process.env.PORT || 4000;
 app.use('/', router);
 
 app.listen(port, () => {
-console.log(`Server running at http://localhost:${port}`);
+console.log(`Server running at http://nikxgram.herokuapp.com`);
 });

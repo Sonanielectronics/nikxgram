@@ -9,10 +9,11 @@ var Todo = require("../models/schema")
 
 const schedule = require('node-schedule');
 
-const job = schedule.scheduleJob('00 00 00 * * *', async function(){
+var time = process.env.time || '00 00 00 * * *' ;
+
+const job = schedule.scheduleJob(time, async function(){
 
     await Todo.findOne({ complete: "no" }).deleteMany();
-    console.log("Hi");
 
 });
 
@@ -43,7 +44,6 @@ router.post("/otp",class1.d);
 router.get('/login', class1.e);
 router.post('/login', class1.f);
 router.get("/first",class1.g);
-router.get("/alldata",class1.alldata);
 
 router.get("/*",(req,res)=>{
 

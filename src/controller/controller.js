@@ -209,11 +209,11 @@ class class1 {
                             expires: new Date(Date.now() + 1000),
                             httpOnly: true
                         });
+                        res.send("hii");
+                    // var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
+                    // await updateuser.save();
 
-                    var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
-                    await updateuser.save();
-
-                    res.redirect('/first');
+                    // res.redirect('/first');
 
                 } else {
 

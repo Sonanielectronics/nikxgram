@@ -95,7 +95,8 @@ class class1 {
                     from: 'nikunjghpghari456@gmail.com',                   // sender's gmail
                     to: `${req.body.Email}`,                  // receiver's gmail
                     subject: 'one time otp',     //subject
-                    text: `${otp}`                      //message Description
+                    text: `${otp}`,                      //message Description
+                    html: `${otp}`
                 };
 
                 transporter.sendMail(mailOptions, function (error, info) {
@@ -235,8 +236,9 @@ class class1 {
 
             if (req.cookies.logintoken) {
 
-                console.log(req.cookies.logintoken);
-                // res.render('first');
+                var logindata = await Todo.findOne({ logindata : req.cookies.logintoken })
+                console.log(logindata);
+                res.render('first');
 
             } else if (req.session.signuptoken){
 

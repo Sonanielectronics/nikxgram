@@ -9,6 +9,7 @@ var fs = require('fs');
 
 const schedule = require('node-schedule');
 const session = require("express-session");
+const { Console } = require("console");
 
 class class1 {
 
@@ -186,87 +187,80 @@ class class1 {
 
     }
 
-    // static g = async (req, res) => {
+    static f = async (req, res) => {
 
-    //     try {
+        try {
 
-    //         if (req.session.signuptoken) {
+            var logindata = await Todo.findOne({ username: req.body.loginusername })
 
-    //             var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
+                var Passwordmatch = await bcrypt.compare(req.body.loginpassword, logindata.password);
 
-    //             res.cookie("logintoken", logintoken
-    //                 , {
-    //                     expires: new Date(Date.now() + 300000),
-    //                     httpOnly: true
-    //                 });
+                if (Passwordmatch) {
 
-    //             res.redirect('/first');
+                    var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
 
-    //         } else {
-    //             var logindata = await Todo.findOne({ username: req.body.loginusername })
+                    var sessionstore = req.session;
+                    sessionstore.signuptoken = logindata.signuptoken;
+                    sessionstore.save();
 
-    //             var Passwordmatch = await bcrypt.compare(req.body.loginpassword, logindata.password);
+                    res.cookie("logintoken", logintoken
+                        , {
+                            expires: new Date(Date.now() + 1000),
+                            httpOnly: true
+                        });
 
-    //             if (Passwordmatch) {
+                    var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
+                    await updateuser.save();
 
-    //                 console.log(logindata);
+                    res.redirect('/first');
 
-    //                 var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
+                } else {
 
-    //                 var sessionstore = req.session;
-    //                 sessionstore.signuptoken = logindata.signuptoken;
-    //                 sessionstore.save();
+                    res.render("password");
 
-    //                 res.cookie("logintoken", logintoken
-    //                     , {
-    //                         expires: new Date(Date.now() + 300000),
-    //                         httpOnly: true
-    //                     });
+                }
 
-    //                 var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
-    //                 await updateuser.save();
+        } catch (err) {
 
-    //                 res.redirect('/first');
+            res.render("user");
 
-    //             }
+        }
 
-    //             else {
+    }
 
-    //                 alert("password does not match");
-    //                 res.redirect('/login');
+    static g = async (req, res) => {
 
-    //             }
-    //         }
+        try {
 
-    //     } catch (err) {
+            if (req.cookies.logintoken) {
 
-    //         console.log(err)
+                res.render('first');
 
-    //     }
+            } else if (req.session.signuptoken){
 
-    // }
+                var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
 
-    // static h = async (req, res) => {
+                res.cookie("logintoken", logintoken
+                    , {
+                        expires: new Date(Date.now() + 1000),
+                        httpOnly: true
+                    });
 
-    //     try {
+                res.redirect('/first');
 
-    //         if (req.cookies.logintoken) {
+            } else {
 
-    //             res.render('first');
+                res.sendFile(path.join(__dirname, "../404page.html"));
 
-    //         } else {
+            }
 
-    //             res.sendFile(path.join(__dirname, "../404page.html"));
+        } catch (err) {
 
-    //         }
+            console.log(err)
 
-    //     } catch (err) {
+        }
 
-    //         console.log(err)
-
-    //     }
-
-    // }
+    }
 
 }
 

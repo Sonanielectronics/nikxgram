@@ -1,5 +1,6 @@
 var Todo = require("../models/schema")
 // var { Todo1 , Todo2 } = require("../models/schema")
+require('dotenv').config();
 
 var jwt = require("jsonwebtoken");
 var path = require("path");
@@ -195,31 +196,30 @@ class class1 {
 
                 var Passwordmatch = await bcrypt.compare(req.body.loginpassword, logindata.password);
 
-                res.send(Passwordmatch);
-                // if (Passwordmatch) {
+                if (Passwordmatch) {
 
-                //     var logintoken = jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
+                    var logintoken = await jwt.sign({ username: req.body.loginusername }, process.env.SECRET_KEY);
 
-                //     var sessionstore = req.session;
-                //     sessionstore.signuptoken = logindata.signuptoken;
-                //     sessionstore.save();
+                    var sessionstore = req.session;
+                    sessionstore.signuptoken = logindata.signuptoken;
+                    sessionstore.save();
 
-                //     res.cookie("logintoken", logintoken
-                //         , {
-                //             expires: new Date(Date.now() + 1000),
-                //             httpOnly: true
-                //         });
+                    res.cookie("logintoken", logintoken
+                        , {
+                            expires: new Date(Date.now() + 1000),
+                            httpOnly: true
+                        });
 
-                //     var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
-                //     await updateuser.save();
+                    var updateuser = await Todo.findOneAndUpdate({ signuptoken: req.session.signuptoken }, { $set: { logintoken: logintoken } });
+                    await updateuser.save();
 
-                //     res.redirect('/first');
+                    res.redirect('/first');
 
-                // } else {
+                } else {
 
-                //     res.render("password");
+                    res.render("password");
 
-                // }
+                }
 
         } catch (err) {
 

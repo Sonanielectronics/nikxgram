@@ -176,40 +176,15 @@ class class1 {
 
     }
 
-    // static e = async (req, res) => {
+    static e = async (req, res) => {
 
-    //     try {
+        try {
+            res.render("login");
+        } catch (err) {
+            console.log(err);
+        }
 
-    //         if (req.session.userid) {
-
-    //             await Todo.findOne({ signuptoken: req.session.userid }).deleteMany();
-    //             req.session.destroy();
-
-    //             res.render("signup")
-
-    //         } else {
-
-    //             res.sendFile(path.join(__dirname, "../404page.html"));
-
-    //         }
-
-    //     } catch (err) {
-
-    //         console.log(err);
-
-    //     }
-
-    // }
-
-    // static f = async (req, res) => {
-
-    //     try {
-    //         res.render("login");
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-
-    // }
+    }
 
     // static g = async (req, res) => {
 
